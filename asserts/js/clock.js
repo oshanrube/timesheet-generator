@@ -19,7 +19,7 @@ setInterval( function() {
 		//ping the server
 		var ts = Math.round((new Date()).getTime() / 1000);
 		var jqxhr = $.ajax({
-			url: "server.php?time="+ts,
+			url: "server.php?action=clock&time="+ts,
 			cache: false
 			})
     	.done(function() { $("#status").html("Server Live"); })
@@ -43,8 +43,7 @@ setInterval( function() {
 	
 	$("#toggle_time").click(function(response){
 		if($(this).text() == 'Start'){
-			
-			$.ajax({url: "server.php?action=start"+getFormData(),cache: false})
+			$.ajax({url: "server.php?action=startTask"+getFormData(),cache: false})
 			.done(function() { 
 				//update the text
 				$(this).text('Stop');
@@ -57,19 +56,3 @@ setInterval( function() {
 	});	
 	
 }); 
-
-
-
-function getFormData(){
-	var qs ='';
-	//from
-	qs += "&from="+htmlEncode($("#from").val());
-	qs += "&to="+htmlEncode($("#to").val());
-	qs += "&project="+htmlEncode($("#project").val());
-	qs += "&comment="+htmlEncode($("#comment").val());
-	return qs;
-}
-
-function htmlEncode(value){
-  return $('<div/>').text(value).html();
-}

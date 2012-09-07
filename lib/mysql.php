@@ -29,7 +29,9 @@ class Mysql extends Dbconfig    {
 	}
 	
 	function query($sql) {
-        	$result = MYSQL_QUERY ($sql, $this -> connectionString) or DIE ("Invalid query: " . MYSQL_ERROR());
+		if(!$this->connectionString)
+			$this->dbConnect();
+        	$result = MYSQL_QUERY ($sql, $this->connectionString) or DIE ("Invalid query: " . MYSQL_ERROR());
           	return $result;
      	}
      

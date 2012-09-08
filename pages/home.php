@@ -1,6 +1,12 @@
+<?php
+require 'api.php';
+$api = new timesheetApi();
+?>
 <form action="server.php" method="POST" id="job-details">
 	<select name="project" id="project">
-		<option value="DBA">DBA</option>
+		<?php foreach($api->getProjects() as $project):?>
+			<option value="<?php echo $project->id?>"><?php echo $project->name?></option>
+		<?php endforeach;?>
 	</select>
 	<input name="from" id="from" type="text" placeholder="From: (YYYY-MM-DD HH:MM:SS)" />
 	<input name="to" id="to" type="text" placeholder="To: (YYYY-MM-DD HH:MM:SS)"/>

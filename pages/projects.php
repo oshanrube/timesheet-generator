@@ -24,6 +24,7 @@ $i = 0;
 					</tr>
 				</thead>
 				<tbody>
+					<?php if($projects):?>
 					<?php foreach($projects as $project):?>
 					<tr>
 						<td><?php echo $i++?></td>
@@ -35,6 +36,11 @@ $i = 0;
 						<td><button type="button" id="project-<?php echo $project->id?>" class="delete" data-dismiss="alert">x</button></td>
 					</tr>
 					<?php endforeach;?>
+					<?php else:?>
+					<tr>
+						<td colspan="7">No Projects are found</td>
+					</tr>
+					<?php endif;?>
 				</tbody>
 			</table>
 		</div>

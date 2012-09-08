@@ -9,6 +9,7 @@ class Mysql extends Dbconfig    {
 	protected $hostName;
     	protected $userName;
     	protected $passCode;
+	private $error;
 
 	function Mysql()    {
     		$this -> connectionString = NULL;
@@ -31,8 +32,10 @@ class Mysql extends Dbconfig    {
 	function query($sql) {
 		if(!$this->connectionString)
 			$this->dbConnect();
-        	$result = MYSQL_QUERY ($sql, $this->connectionString) or DIE ("Invalid query: " . MYSQL_ERROR());
-          	return $result;
+        	if($result = MYSQL_QUERY ($sql, $this->connectionString))
+          		return $result;
+		$this->error = MYSQL_ERROR();
+		return false;
      	}
      
 	function fetch($sql) {
@@ -53,4 +56,7 @@ class Mysql extends Dbconfig    {
           		$value = MYSQL_RESULT($result, 0);
           	return $value;
      	}
+	function getError(){
+		return $this->error;
+	}
 }

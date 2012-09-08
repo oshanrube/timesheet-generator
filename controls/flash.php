@@ -10,3 +10,7 @@
 	<strong>Error!</strong> <?php echo $_SESSION['error']?>
 </div>
 <?php endif;?>
+<?php
+unset($_SESSION['success']);
+unset($_SESSION['error']);
+?>

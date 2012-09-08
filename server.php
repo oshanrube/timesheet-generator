@@ -25,4 +25,11 @@ switch($_GET['action']) {
 		else 
 			$_SESSION['success'] = 'Project Deleted';
 		break;
+	case "startTask":
+		$api = new timesheetApi();
+		if(!$api->startTask($_POST))
+			$_SESSION['error'] = $api->getError();
+		else 
+			$_SESSION['success'] = 'Task Started';
+		break;
 }

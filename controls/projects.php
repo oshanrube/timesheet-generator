@@ -3,14 +3,13 @@
 	<input type="text" data-errormessage-value-missing="Project Name is required!" name="description" placeholder="Project Description" required/>
 	<button type="submit" class="btn btn-primary" >Add New Project</button>
 </form>
-<script> 
-// wait for the DOM to be loaded 
-$(document).ready(function() { 
-	// bind 'myForm' and provide a simple callback function 
+<script type="text/javascript" >
+
+$(document).ready(function(){
 	var options = { 
 		clearForm: true,
 		success:    function() { loadStatus(); loadPage(); } 
-	}; 
-	$('form#project').ajaxForm(options);
-}); 
+	};
+$('form#project').ajaxForm(options);
+});
 </script>

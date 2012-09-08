@@ -8,11 +8,13 @@
 <link type="text/css" rel="stylesheet" href="asserts/css/tabber-style.css" media="screen"/>
 
 
-<script type="text/javascript" src="asserts/js/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="asserts/js/jquery.min.js"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="asserts/js/clock.js"></script>
 <script type="text/javascript" src="asserts/js/jquery.form.js"></script>
 <script type="text/javascript" src="asserts/js/sliding.form.js"></script>
-
+<script type="text/javascript" src="asserts/js/form.js"></script>
+<script type="text/javascript" src="asserts/js/jquery.tinyscrollbar.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -34,7 +36,8 @@
 		<li><a href="worksheets">Worksheets</a></li>  
 		<li><a href="export">Export</a></li>  
 		</ul>  
-	</div> 
+	</div>
+	<div id="flash"></div>
 	<div class="tabs-wrapper">
 		<div id="contols"></div>
 		<button id="refresh-btn"></button>

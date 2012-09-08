@@ -169,7 +169,12 @@ ul.menu li.active a{
     background : -moz-linear-gradient(top, rgb(168,168,168), rgb(69,69,69));  
     border-top: 2px solid #939393;  
     position: relative;  
-    margin-bottom: 30px;  
+    margin-bottom: 20px;  
+}
+/* flash */
+#flash{
+	width: 800px;
+	margin: 0 auto;
 }
 /*controls*/
 #contols form input{
@@ -210,7 +215,6 @@ ul.menu li.active a{
 	clear: both;
 }
 #tabs .tab{
-	height: 210px;
 	width: 800px;
 	display: block;
 	float: left;
@@ -230,4 +234,34 @@ ul.menu li.active a{
 /* Projects */
 #projects table{
 	width: 100%;
+}
+#projects table td{
+	text-align: center;
+}
+/* Tiny Scrollbar */
+#scrollbar1 { width: 800px; margin: 20px 0 10px; }
+#scrollbar1 .viewport { width: 780px; height: 200px; overflow: hidden; position: relative; }
+#scrollbar1 .overview { width: 100%; list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0; }
+#scrollbar1 .scrollbar{ background: transparent url(images/bg-scrollbar-track-y.png) no-repeat 0 0; position: relative; background-position: 0 0; float: right; width: 15px; }
+#scrollbar1 .track { background: transparent url(images/bg-scrollbar-trackend-y.png) no-repeat 0 100%; height: 100%; width:13px; position: relative; padding: 0 1px; }
+#scrollbar1 .thumb { background: transparent url(images/bg-scrollbar-thumb-y.png) no-repeat 50% 100%; height: 20px; width: 25px; cursor: pointer; overflow: hidden; position: absolute; top: 0; left: -5px; }
+#scrollbar1 .thumb .end { background: transparent url(images/bg-scrollbar-thumb-y.png) no-repeat 50% 0; overflow: hidden; height: 5px; width: 25px; }
+#scrollbar1 .disable { display: none; }
+.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
+
+.delete{
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+	opacity: .4;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	-webkit-appearance: none;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 20px;
+	color: white;
+	text-shadow: 0 1px 0 white;
 }

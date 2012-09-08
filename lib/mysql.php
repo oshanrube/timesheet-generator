@@ -39,7 +39,7 @@ class Mysql extends Dbconfig    {
         	$data = ARRAY();
           	$result = $this->query($sql);
  
-          	while($row = MYSQL_FETCH_ASSOC($result)) {
+          	while($row = MYSQL_FETCH_OBJECT($result)) {
                		$data[] = $row;
           	}
                	return $data;

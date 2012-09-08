@@ -9,7 +9,7 @@ $(document).ready(function() {
 	// bind 'myForm' and provide a simple callback function 
 	var options = { 
 		clearForm: true,
-		success:    function() { loadStatus(); } 
+		success:    function() { loadStatus(); loadPage(); } 
 	}; 
 	$('form#project').ajaxForm(options);
 }); 

@@ -43,7 +43,7 @@ $i = 0;
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#scrollbar1').tinyscrollbar();	
-		$('#projects button.delete').click(){
+		$('#projects button.delete').click(function(){
 			deleteProject($(this).attr('id'));
 		});
 	});

@@ -28,8 +28,9 @@ class timesheetApi{
 	}
 	public function deleteProject($post){
 		//validate 
-		if(empty($post['id']))
+		if(empty($post['id']) && preg_match("/project-[0-9]+/",$post['id']))
 			return false;
+		$post['id'] = str_replace('project-','',$post['id']);
 		//create query
 		$query = 'DELETE FROM `project`	WHERE `id` = "'.mysql_escape_string($post['id']).'" ';
 		//execute
@@ -46,7 +47,6 @@ class timesheetApi{
 			$this->error = $this->connection->getError();
 			return false;
 		} else {
-			var_dump($projects);
 			return $projects;
 		}
 	}

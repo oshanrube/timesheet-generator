@@ -6,14 +6,12 @@
 <link type="text/css" rel="stylesheet" href="asserts/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="asserts/css/style.css" />
 <link type="text/css" rel="stylesheet" href="asserts/css/tabber-style.css" media="screen"/>
-<link type="text/css" rel="stylesheet" href="asserts/css/validationEngine.jquery.css" type="text/css"/>
 
 
 <script type="text/javascript" src="asserts/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="asserts/js/clock.js"></script>
 <script type="text/javascript" src="asserts/js/jquery.form.js"></script>
 <script type="text/javascript" src="asserts/js/sliding.form.js"></script>
-<script type="text/javascript" src="asserts/js/jquery.validationEngine.js" charset="utf-8"></script>
 
 </head>
 <body>

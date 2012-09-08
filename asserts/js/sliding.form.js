@@ -12,14 +12,15 @@ $(function() {
 		var $this	= $(this);
 		var prev	= current;
 		$this.closest('ul').find('li').removeClass('active');
-      $this.parent().addClass('active');
+		$this.parent().addClass('active');
 		current = $this.parent().index();
 		$('#tabs').stop().animate({
-      	marginLeft: '-' + widths[current] + 'px'
-      },500,function(){});
-      loadPage();
-      e.preventDefault();
-   });
+			marginLeft: '-' + widths[current] + 'px'
+		},500,function(){});
+		//if the page is not loaded yet
+		loadPage();
+		e.preventDefault();
+	});
    //set the default
    $("ul.menu li:first-child").addClass('active');
 	$('#tabs').stop().animate({marginLeft: '-' + widths[(current-1)] + 'px'},500,function(){});

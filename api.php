@@ -1,6 +1,6 @@
 <?php 
 require 'lib/mysql.php';
-
+require 'lib/excel.php';
 
 class timesheetApi{
 	
@@ -51,9 +51,9 @@ class timesheetApi{
 			return false;
 		//create query
 		$query = 'INSERT INTO `project` 
-				(`name`, `description`) 
+				(`name`, `description`, `start_date`) 
 			  VALUES 
-				("'.mysql_escape_string($post['name']).'", "'.mysql_escape_string($post['description']).'")';
+				("'.mysql_escape_string($post['name']).'", "'.mysql_escape_string($post['description']).'", NOW())';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();
@@ -83,6 +83,16 @@ class timesheetApi{
 			return false;
 		} else {
 			return $projects;
+		}
+	}
+	public function getTasks(){
+		//query the projects in the database
+		$query = 'SELECT * FROM `task`';
+		if(!$tasks = $this->connection->fetch($query)){
+			$this->error = $this->connection->getError();
+			return false;
+		} else {
+			return $tasks;
 		}
 	}
 	public function getDefaultTask() {
@@ -131,11 +141,11 @@ class timesheetApi{
 	}
 	public function deleteWorksheet($post){
 		//validate 
-		if(empty($post['id']) && preg_match("/project-[0-9]+/",$post['id']))
+		if(empty($post['id']) && preg_match("/worksheet-[0-9]+/",$post['id']))
 			return false;
-		$post['id'] = str_replace('project-','',$post['id']);
+		$post['id'] = str_replace('worksheet-','',$post['id']);
 		//create query
-		$query = 'DELETE FROM `project`	WHERE `id` = "'.mysql_escape_string($post['id']).'" ';
+		$query = 'DELETE FROM `work_log`	WHERE `id` = "'.mysql_escape_string($post['id']).'" ';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();
@@ -153,6 +163,23 @@ class timesheetApi{
 			return false;
 		} else
 			return $worksheets;
+	}
+	public function exportWorksheet(){
+		//get worklog
+		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
+			FROM `work_log` as w,`project` as p,`task` as t 
+			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`
+			ORDER BY  `w`.`end_time`';
+		if(!$worksheets = $this->connection->fetch($query)){
+			$this->error = $this->connection->getError();
+			return false;
+		}
+		//get total task hours
+		//get total project Hours
+		//export to excel
+		$excel = new Excel();
+		$excel->createExcel($worksheets);
+		
 	}
 	public function getError(){
 		return $this->error;

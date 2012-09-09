@@ -38,4 +38,18 @@ switch($_GET['action']) {
 		else 
 			$_SESSION['success'] = 'Task Stopped';
 		break;
+	case "deleteWorksheet":
+		$api = new timesheetApi();
+		if(!$api->deleteWorksheet($_POST))
+			$_SESSION['error'] = $api->getError();
+		else 
+			$_SESSION['success'] = 'Worksheet Deleted';
+		break;
+	case "export":
+		$api = new timesheetApi();
+		if(!$api->exportWorksheet($_POST))
+			$_SESSION['error'] = $api->getError();
+		else 
+			$_SESSION['success'] = 'Worksheet Exported';
+		break;
 }

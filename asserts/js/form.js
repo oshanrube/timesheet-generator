@@ -15,3 +15,11 @@ function deleteProject(id){
 		loadPage();
 	});
 }
+function deleteWorksheet(id){
+	//get status
+	var url = 'server.php?action=deleteWorksheet';
+	$.post(url,{id:id},function(result){
+		loadStatus();
+		loadPage();
+	});
+}

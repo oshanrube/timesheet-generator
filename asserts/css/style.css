@@ -75,23 +75,11 @@ ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; f
 	width: 800px;
 	margin: 20px auto;
 }
-#home form > *{
-	margin: 5px 0;
-	float: left;
-	clear: both;
-	padding: 5px;
-}
 #home select{
-	padding: 5px;
-	border: 1px solid #CCC;
 	width: 650px;
-	height: 35px;
 }
 #home input{
-	clear: none;
-	width: 308px;
-	border: 1px solid #CCC;
-	margin-right: 10px;
+	width: 310px;
 }
 #home textarea{
 	width: 638px;
@@ -101,7 +89,7 @@ ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; f
 	float: right;
 	clear: none;
 	width: 143px;
-	height: 198px;
+	height: 190px;
 	margin-top: -80px;
 }
 /* Top Menu */
@@ -216,6 +204,7 @@ ul.menu li.active a{
 }
 #tabs .tab{
 	width: 800px;
+	height: 200px;
 	display: block;
 	float: left;
 }
@@ -237,6 +226,34 @@ ul.menu li.active a{
 }
 #projects table td{
 	text-align: center;
+}
+/* Export */
+#export {
+	margin: 20px auto;
+}
+#export .date{
+	display: block;
+	float: left;
+	width: 319px;
+}
+#export .date input{
+	margin: 0;
+	margin-left: -4px;
+	width: 283px;
+}
+#export #interval{
+	width: 650px;
+	margin-bottom: 5px;
+}
+#export select{
+	width: 324px;
+}
+#export .btn{
+	float: right;
+	clear: none;
+	width: 143px;
+	height: 190px;
+	margin-top: -80px;
 }
 /* Tiny Scrollbar */
 .scrollbar { width: 800px; margin: 20px 0 10px; }

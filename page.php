@@ -13,7 +13,7 @@ switch($_GET['page']) {
 		$page->getPage('worksheets');
 		break;
 	case "export":
-		include 'pages/export.php';
+		$page->getPage('export');
 		break;
 	default:
 		echo "Happy Hunting";

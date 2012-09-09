@@ -20,6 +20,7 @@ $i = 0;
 						<th>Start Time</th>
 						<th>End Time</th>
 						<th>Total Hours</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,6 +33,7 @@ $i = 0;
 						<td><?php echo $worksheet->start_time;?></td>
 						<td><?php echo $worksheet->end_time;?></td>
 						<td><?php echo $worksheet->total_hours;?></td>
+						<td><button type="button" id="worksheet-<?php echo $worksheet->id?>" class="delete" data-dismiss="alert">x</button></td>
 					</tr>
 					<?php endforeach;?>
 					<?php else:?>
@@ -47,8 +49,8 @@ $i = 0;
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#worksheets-scrollbar').tinyscrollbar();	
-		$('#projects button.delete').click(function(){
-			deleteProject($(this).attr('id'));
+		$('#worksheets button.delete').click(function(){
+			deleteWorksheet($(this).attr('id'));
 		});
 	});
 </script>

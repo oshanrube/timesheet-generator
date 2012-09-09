@@ -4,9 +4,8 @@ require 'api.php';
 
 switch($_GET['action']) {
 	case "clock":
-		$time = $_GET['time'];
-		echo date('Y-m-d H:i:s',$time);
-		file_put_contents('log.log',date('Y-m-d H:i:s',$time)."\n",FILE_APPEND);
+		$api = new timesheetApi();
+		$api->clockIn($_GET['time']);
 		break;
 	case "getFlash":
 		include 'controls/flash.php';
@@ -31,5 +30,12 @@ switch($_GET['action']) {
 			$_SESSION['error'] = $api->getError();
 		else 
 			$_SESSION['success'] = 'Task Started';
+		break;
+	case "stopTask":
+		$api = new timesheetApi();
+		if(!$api->stopTask($_POST))
+			$_SESSION['error'] = $api->getError();
+		else 
+			$_SESSION['success'] = 'Task Stopped';
 		break;
 }

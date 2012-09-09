@@ -7,27 +7,48 @@ $api = new timesheetApi();
 $worksheets = $api->getWorksheets();
 $i = 0;
 ?>
-<table>
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Project Name<th>
-			<th>Comment</th>
-			<th>Start Time</th>
-			<th>End Time</th>
-			<th>Total Hours</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach($worksheets as $worksheet):?>
-		<tr>
-			<td><?php echo $i++?></td>
-			<td><?php echo $table->name;?></td>
-			<td><?php echo $table->description;?></td>
-			<td><?php echo $table->start_date;?></td>
-			<td><?php echo $table->end_date;?></td>
-			<td><?php echo $table->total_hours;?></td>
-		</tr>
-		<?php endforeach;?>
-	</tbody>
-</table>
+<div id="worksheets-scrollbar" class="scrollbar">
+	<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+	<div class="viewport">
+		<div class="overview">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Project Name</th>
+						<th>Comment</th>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Total Hours</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if($worksheets):?>
+					<?php foreach($worksheets as $worksheet):?>
+					<tr>
+						<td><?php echo $i++?></td>
+						<td><?php echo $worksheet->projectname;?></td>
+						<td><?php echo $worksheet->taskname;?></td>
+						<td><?php echo $worksheet->start_time;?></td>
+						<td><?php echo $worksheet->end_time;?></td>
+						<td><?php echo $worksheet->total_hours;?></td>
+					</tr>
+					<?php endforeach;?>
+					<?php else:?>
+					<tr>
+						<td colspan="7">No Worksheets are found</td>
+					</tr>
+					<?php endif;?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#worksheets-scrollbar').tinyscrollbar();	
+		$('#projects button.delete').click(function(){
+			deleteProject($(this).attr('id'));
+		});
+	});
+</script>

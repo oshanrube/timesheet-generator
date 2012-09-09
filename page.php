@@ -10,7 +10,7 @@ switch($_GET['page']) {
 		$page->getPage('projects');
 		break;
 	case "worksheets":
-		include 'pages/worksheets.php';
+		$page->getPage('worksheets');
 		break;
 	case "export":
 		include 'pages/export.php';

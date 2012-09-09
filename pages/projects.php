@@ -7,7 +7,7 @@ $api = new timesheetApi();
 $projects = $api->getProjects();
 $i = 0;
 ?>
-<div id="scrollbar1">
+<div id="projects-scrollbar" class="scrollbar">
 	<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 	<div class="viewport">
 		<div class="overview">
@@ -48,7 +48,7 @@ $i = 0;
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#scrollbar1').tinyscrollbar();	
+		$('#projects-scrollbar').tinyscrollbar();	
 		$('#projects button.delete').click(function(){
 			deleteProject($(this).attr('id'));
 		});

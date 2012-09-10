@@ -1,4 +1,12 @@
-/* clone and install */
+INSTALL
+
+git clone git@github.com:oshanrube/timesheet-generator.git
+* edit the mysql credentials in lib/dbconfig.php
+* open the database.mwb from DB/ and forward engineer the database
+* access the directory from the web browser
+* go to Projects tab -> create project
+* go to homepage -> add a comment -> start
+
 
 Ref-
 	http://blog.insicdesigns.com/2010/02/create-a-slick-menu-using-css3/
@@ -14,3 +22,4 @@ Ref-
 * projects
 * tasks
 * within FROM TO
+* solve foreignkey constrains when deleting projects

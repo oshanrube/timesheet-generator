@@ -52,4 +52,8 @@ switch($_GET['action']) {
 		else 
 			$_SESSION['success'] = 'Worksheet Exported';
 		break;
+	case "interval":
+		$api = new timesheetApi();
+		$api->toggleInterval($_POST);
+		break;
 }

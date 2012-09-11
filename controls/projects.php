@@ -4,7 +4,6 @@
 	<button type="submit" class="btn btn-primary" >Add New Project</button>
 </form>
 <script type="text/javascript" >
-
 $(document).ready(function(){
 	var options = { 
 		clearForm: true,

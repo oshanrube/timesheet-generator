@@ -1,6 +1,7 @@
 <?php 
-require 'lib/mysql.php';
-require 'lib/excel.php';
+session_start();
+require_once 'lib/mysql.php';
+require_once 'lib/excel.php';
 
 class timesheetApi{
 	
@@ -12,6 +13,9 @@ class timesheetApi{
 		$this->connection = new Mysql();
 	}
 	public function clockIn($time) {
+		//if its an interval
+		if($this->getInterval())
+			return false;
 		//get latest task
 		$query = 'SELECT *  FROM `task` WHERE `end_time` IS NULL ORDER BY `start_time` DESC LIMIT 0,1';
 		if($task = $this->connection->getone($query)){
@@ -180,6 +184,22 @@ class timesheetApi{
 		$excel = new Excel();
 		$excel->createExcel($worksheets);
 		
+	}
+	public function getInterval(){
+		if(isset($_SESSION['interval']) && $_SESSION['interval'] != ''){
+			return $_SESSION['interval'];
+		} else {
+			return false;
+		}
+	}
+	public function toggleInterval($data){
+		if(isset($_SESSION['interval']) && $_SESSION['interval'] != ''){
+			unset($_SESSION['interval']);
+		} else {
+			if($data['reason'] == '')
+				$data['reason'] = 'No special reason';
+			$_SESSION['interval'] = $data['reason'];
+		}
 	}
 	public function getError(){
 		return $this->error;

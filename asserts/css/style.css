@@ -176,6 +176,7 @@ ul.menu li.active a{
 }
 #contols form button{
 	margin: 10px 10px 10px 0;
+	width: 133px;
 }
 #contols form textarea{
 	display: block;

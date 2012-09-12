@@ -1,5 +1,5 @@
 <?php
-require 'api.php';
+require_once 'api.php';
 $api = new timesheetApi();
 ?>
 <form action="server.php?action=export" method="POST">

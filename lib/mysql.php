@@ -1,12 +1,12 @@
 <?php
 
-include 'dbconfig.php';
+include_once 'dbconfig.php';
 
 class Mysql extends Dbconfig    {
 
 	public $connectionString;	
-	protected $databaseName;
-	protected $hostName;
+	protected $dbName;
+	protected $serverName;
 	protected $userName;
 	protected $passCode;
 	private $error;
@@ -16,8 +16,8 @@ class Mysql extends Dbconfig    {
 		$this -> sqlQuery = NULL;
 		$this -> dataSet = NULL;
 		$dbPara = new Dbconfig();
-		$this -> databaseName = $dbPara -> dbName;
-		$this -> hostName = $dbPara -> serverName;
+		$this -> dbName = $dbPara -> dbName;
+		$this -> serverName = $dbPara -> serverName;
 		$this -> userName = $dbPara -> userName;
 		$this -> passCode = $dbPara ->passCode;
 		$dbPara = NULL;
@@ -25,7 +25,7 @@ class Mysql extends Dbconfig    {
 
 	function dbConnect()    {
 		$this -> connectionString = mysql_connect($this -> serverName,$this -> userName,$this -> passCode);
-		mysql_select_db($this -> databaseName,$this -> connectionString);
+		mysql_select_db($this -> dbName,$this -> connectionString);
 		return $this -> connectionString;
 	}
 	

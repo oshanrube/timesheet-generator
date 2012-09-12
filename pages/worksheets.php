@@ -1,6 +1,6 @@
 <?php
 
-include 'api.php';
+include_once 'api.php';
 
 //list all the projects in the database
 $api = new timesheetApi();

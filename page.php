@@ -1,5 +1,5 @@
 <?php
-require 'lib/page.php';
+require_once 'lib/page.php';
 $page = new TimesheetPager();
 
 switch($_GET['page']) {

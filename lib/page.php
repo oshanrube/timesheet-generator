@@ -11,7 +11,7 @@ class TimesheetPager{
 	function getFile($file) {
 		ob_start();
 		if(file_exists($file)){
-			include $file;
+			include_once $file;
 		}
 		return ob_get_clean();
 	}

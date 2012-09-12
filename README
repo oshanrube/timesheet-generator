@@ -1,7 +1,7 @@
 INSTALL
 
 git clone git@github.com:oshanrube/timesheet-generator.git
-* edit the mysql credentials in lib/dbconfig.php
+* edit the mysql credentials in lib/dbconfig.php-dist to lib/dbconfig.php
 * open the database.mwb from DB/ and forward engineer the database
 * access the directory from the web browser
 * go to Projects tab -> create project

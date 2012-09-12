@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require 'api.php';
+require_once 'api.php';
 
 switch($_GET['action']) {
 	case "clock":
@@ -8,7 +8,7 @@ switch($_GET['action']) {
 		$api->clockIn($_GET['time']);
 		break;
 	case "getFlash":
-		include 'controls/flash.php';
+		include_once 'controls/flash.php';
 		break;
 	case "addNewProject":
 		$api = new timesheetApi();

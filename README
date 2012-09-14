@@ -26,4 +26,4 @@ Ref-
 
 /* KNOWN BUGS */
 * Timezone error when hosted in a different timezone - there is another brach for this fix but its still in progress
-* split error in bootstrap date picker
+* <strike>split error in bootstrap date picker</strike>

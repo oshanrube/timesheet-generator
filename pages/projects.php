@@ -7,42 +7,36 @@ $api = new timesheetApi();
 $projects = $api->getProjects();
 $i = 0;
 ?>
+<div class="row">
+	<div class="id">ID</div>
+	<div class="name">Project Name</div>
+	<div class="description">Project Description</div>
+	<div class="start-date">Start Date</div>
+	<div class="end-date">End Date</div>
+	<div class="total-hours">Total Hours</div>
+	<div class="close"></div>
+</div>
 <div id="projects-scrollbar" class="scrollbar">
 	<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 	<div class="viewport">
 		<div class="overview">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Project Id</th>
-						<th>Project Name</th>
-						<th>Project Description</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th>Total Hours</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
 					<?php if($projects):?>
 					<?php foreach($projects as $project):?>
-					<tr>
-						<td><?php echo $i++?></td>
-						<td><?php echo $project->name;?></td>
-						<td><?php echo $project->description;?></td>
-						<td><?php echo $project->start_date;?></td>
-						<td><?php echo $project->end_date;?></td>
-						<td><?php echo $project->total_hours;?></td>
-						<td><button type="button" id="project-<?php echo $project->id?>" class="delete" data-dismiss="alert">x</button></td>
-					</tr>
+					<div class="row">
+						<div class="id"><?php echo $i++?></div>
+						<div class="name"><?php echo $project->name;?></div>
+						<div class="description"><?php echo $project->description;?></div>
+						<div class="start-date"><?php echo $project->start_date;?></div>
+						<div class="end-date"><?php echo $project->end_date;?></div>
+						<div class="total-hours"><?php echo $project->total_hours;?></div>
+						<div class="close"><button type="button" id="project-<?php echo $project->id?>" class="delete" data-dismiss="alert">x</button></div>
+					</div>
 					<?php endforeach;?>
 					<?php else:?>
-					<tr>
-						<td colspan="7">No Projects are found</td>
-					</tr>
+					<div class="row">
+						<div>No Projects are found</div>
+					</div>
 					<?php endif;?>
-				</tbody>
-			</table>
 		</div>
 	</div>
 </div>

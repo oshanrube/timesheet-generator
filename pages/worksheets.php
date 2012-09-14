@@ -7,42 +7,36 @@ $api = new timesheetApi();
 $worksheets = $api->getWorksheets();
 $i = 0;
 ?>
+<div class="row">
+	<div class="id">ID</div>
+	<div class="name">Project Name</div>
+	<div class="comment">Comment</div>
+	<div class="start-time">Start Time</div>
+	<div class="end-time">End Time</div>
+	<div class="total-hours">Total Hours</div>
+	<div class="close"></div>
+</div>
 <div id="worksheets-scrollbar" class="scrollbar">
 	<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
 	<div class="viewport">
 		<div class="overview">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Project Name</th>
-						<th>Comment</th>
-						<th>Start Time</th>
-						<th>End Time</th>
-						<th>Total Hours</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
 					<?php if($worksheets):?>
 					<?php foreach($worksheets as $worksheet):?>
-					<tr>
-						<td><?php echo $i++?></td>
-						<td><?php echo $worksheet->projectname;?></td>
-						<td><?php echo $worksheet->taskname;?></td>
-						<td><?php echo $worksheet->start_time;?></td>
-						<td><?php echo $worksheet->end_time;?></td>
-						<td><?php echo $worksheet->total_hours;?></td>
-						<td><button type="button" id="worksheet-<?php echo $worksheet->id?>" class="delete" data-dismiss="alert">x</button></td>
-					</tr>
+					<div class="row">
+						<div class="id"><?php echo $i++?></div>
+						<div class="name"><?php echo $worksheet->projectname;?></div>
+						<div class="comment"><?php echo $worksheet->taskname;?></div>
+						<div class="start-time"><?php echo $worksheet->start_time;?></div>
+						<div class="end-time"><?php echo $worksheet->end_time;?></div>
+						<div class="total-hours"><?php echo $worksheet->total_hours;?></div>
+						<div class="close"><button type="button" id="worksheet-<?php echo $worksheet->id?>" class="delete" data-dismiss="alert">x</button></div>
+					</div>
 					<?php endforeach;?>
 					<?php else:?>
-					<tr>
-						<td colspan="7">No Worksheets are found</td>
-					</tr>
+					<div class="row">
+						<div>No Worksheets are found</div>
+					</div>
 					<?php endif;?>
-				</tbody>
-			</table>
 		</div>
 	</div>
 </div>

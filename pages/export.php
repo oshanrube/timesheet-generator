@@ -4,19 +4,19 @@ $api = new timesheetApi();
 ?>
 <form action="server.php?action=export" method="POST">
 	<select name="project_id" id="project">
-		<option value="">All</option>
+		<option value="">All Projects</option>
 		<?php foreach($api->getProjects() as $project):?>
 			<option value="project-<?php echo $project->id?>"><?php echo $project->name?></option>
 		<?php endforeach;?>
 	</select>
 	<select name="task_id" id="task">
-		<option value="">All</option>
+		<option value="">All Tasks</option>
 		<?php foreach($api->getTasks() as $task):?>
 			<option id="task-project-<?php echo $task->project_id?>" value="task-<?php echo $task->id?>"><?php echo $task->comment?></option>
 		<?php endforeach;?>
 	</select>
 	<select name="interval" id="interval">
-		<option value="">Custom</option>
+		<option value="">Custom / All</option>
 		<option value="day">Day</option>
 		<option value="week">Week</option>
 		<option value="month">Month</option>

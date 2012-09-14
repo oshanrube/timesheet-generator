@@ -1,8 +1,6 @@
 <?php
 require_once 'api.php';
 $api = new timesheetApi();
-$data = $api->getDefaultTask();
-if($data['id'] != NULL):
 ?>
 <form class="form-inline" method="post" id="interval" action="server.php?action=interval">
 <?php if($reason = $api->getInterval()){ ?>
@@ -22,4 +20,3 @@ $(document).ready(function(){
 	$('form#interval').ajaxForm(options);
 });
 </script>
-<?php endif;?>

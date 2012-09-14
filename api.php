@@ -172,7 +172,8 @@ class timesheetApi{
 		//query the projects in the database
 		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
 			FROM `work_log` as w,`project` as p,`task` as t 
-			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`';
+			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id` 
+			ORDER BY w.end_time DESC';
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;

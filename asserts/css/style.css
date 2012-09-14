@@ -208,6 +208,7 @@ ul.menu li.active a{
 	height: 200px;
 	display: block;
 	float: left;
+	margin-top: 20px;
 }
 #refresh-btn{
 	background: url('images/refresh.png') no-repeat top right;

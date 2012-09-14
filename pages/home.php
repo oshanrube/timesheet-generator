@@ -10,7 +10,7 @@ else
 <form action="server.php?action=<?php echo $task?>" method="POST" id="job-details">
 	<select name="project_id" id="project">
 		<?php foreach($api->getProjects() as $project):?>
-			<option value="project-<?php echo $project->id?>"><?php echo $project->name?></option>
+			<option value="project-<?php echo $project->id?>" <?php if($data['project_id'] == $project->id)echo "selected"; ?>><?php echo $project->name?></option>
 		<?php endforeach;?>
 	</select>
 	<input name="start_time" id="start_time" type="text" value="<?php echo $data['start_time']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)" required/>

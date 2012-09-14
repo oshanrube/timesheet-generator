@@ -35,11 +35,6 @@ $api = new timesheetApi();
 </form>
 <script type="text/javascript">
 	$(document).ready(function(){
-		//var options = { ¨¨
-		//	clearForm: true,
-		//	success:    function() { loadStatus(); loadPage(); } 
-		//};
-		//$('form#export').ajaxForm(options);
 		$('#project form').change(function(){
 			var project_id = $(this).val();
 			$('form #task option').show();

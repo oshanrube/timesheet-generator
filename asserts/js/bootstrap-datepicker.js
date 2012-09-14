@@ -113,12 +113,14 @@
 		},
 		
 		update: function(){
-			this.date = DPGlobal.parseDate(
-				this.isInput ? this.element.prop('value') : this.element.data('date'),
-				this.format
-			);
-			this.viewDate = new Date(this.date);
-			this.fill();
+			if(this.element.data('date')) {
+				this.date = DPGlobal.parseDate(
+					this.isInput ? this.element.prop('value') : this.element.data('date'),
+					this.format
+				);
+				this.viewDate = new Date(this.date);
+				this.fill();
+			}
 		},
 		
 		fillDow: function(){

@@ -283,3 +283,21 @@ ul.menu li.active a{
 	color: white;
 	text-shadow: 0 1px 0 white;
 }
+#contols #customTask input{
+	width: 422px;
+	float: right;
+	margin: 0 10px 0 0px;
+}
+#contols #customTask select{
+width: 296px;
+}
+#contols #customTask .date{
+	width: 300px;
+	margin-top: 10px;
+	padding:0;
+}
+#contols #customTask .date input{
+	width: 255px;
+	float: left;
+	margin:0;
+}

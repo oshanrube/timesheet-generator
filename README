@@ -22,6 +22,7 @@ Ref-
 * projects
 * tasks
 * within FROM TO
+* add a custom task
 
 /* KNOWN BUGS */
 * Timezone error when hosted in a different timezone - there is another brach for this fix but its still in progress

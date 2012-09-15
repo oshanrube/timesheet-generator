@@ -23,12 +23,12 @@ $api = new timesheetApi();
 		<option value="year">Year</option>
 	</select>
 	<div class="input-append date datepicker" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-		<input name="start_time" id="start_time" type="text" value="<?php echo $data['start_time']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
+		<input name="start_datetime" id="start_datetime" type="text" placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
 	  <span class="add-on"><i class="icon-th"></i></span>
 	</div>
 	
 	<div class="input-append date datepicker" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-		<input name="end_time" id="end_time" type="text" value="<?php echo $data['end_time']?>"  placeholder="To: (YYYY-MM-DD HH:MM:SS)"/>
+		<input name="end_datetime" id="end_datetime" type="text" placeholder="To: (YYYY-MM-DD HH:MM:SS)"/>
 		<span class="add-on"><i class="icon-th"></i></span>
 	</div>
 	<button class="btn btn-success"> Export </button>

@@ -10,14 +10,6 @@ class Excel{
 	public function __construct() {
 		/** Create a new PHPExcel Object  **/
 		$this->objPHPExcel = new PHPExcel();
-		$this->objPHPExcel->getProperties()
-		            ->setCreator("Maarten Balliauw")
-		            ->setLastModifiedBy("Maarten Balliauw")
-		            ->setTitle("Office 2007 XLSX Test Document")
-		            ->setSubject("Office 2007 XLSX Test Document")
-		            ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-		            ->setKeywords("office 2007 openxml php")
-		            ->setCategory("Test result file");
 		$this->filename = 'timesheet-'.date("YmdHis").'.xlsx';
 	}
 	
@@ -45,7 +37,7 @@ class Excel{
 		$this->objPHPExcel->getActiveSheet()->setCellValue('E1', 'Time');
 		$this->objPHPExcel->getActiveSheet()->setCellValue('F1', 'Comment');
 		$this->objPHPExcel->getActiveSheet()->setCellValue('G1', 'Initials');
-		$this->objPHPExcel->getActiveSheet()->setCellValue('H1', 'Spent');
+		$this->objPHPExcel->getActiveSheet()->setCellValue('H1', 'Time Spent(H:M)');
 		/*SET COLUMN WIDTH*/
 		$this->objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 		$this->objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
@@ -88,8 +80,8 @@ class Excel{
 		/*BODY*/
 		$row = 3;
 		foreach($records as $record){
-			list($SDate,$STime) = explode(' ',$record->start_time);
-			list($EDate,$ETime) = explode(' ',$record->end_time);
+			list($SDate,$STime) = explode(' ', date('d-m-Y H:i',$record->start_datetime));
+			list($EDate,$ETime) = explode(' ', date('d-m-Y H:i',$record->end_datetime));
 			
 			$this->objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $record->projectname);			
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );

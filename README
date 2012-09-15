@@ -18,12 +18,12 @@ Ref-
 * Big thanks goes to these projects for making this project in such a short time
 
 /* TODO */
-* add a EXPORT filter
-	projects, tasks, within FROM - TO
 * add js effects for notices, controllers etc
 
 /* DONE */
 * add a custom task
+* add a EXPORT filter
+	projects, tasks, within FROM - TO
 
 /* KNOWN BUGS */
 * Timezone error when hosted in a different timezone - there is another brach for this fix but its still in progress

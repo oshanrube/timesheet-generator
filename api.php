@@ -223,12 +223,25 @@ class timesheetApi{
 		}
 		return $this->updateDateTime($worksheets);
 	}
-	public function exportWorksheet(){
+	public function exportWorksheet($post){
 		//get worklog
 		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
 			FROM `work_log` as w,`project` as p,`task` as t 
-			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`
-			ORDER BY  `w`.`end_datetime`';
+			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id` ';
+		//if project id
+		if($post['project_id'])
+			$query .= ' AND p.id = '.$post['project_id'];
+		//if task id
+		if($post['task_id'])
+			$query .= ' AND t.id = '.$post['task_id'];
+		//if task id
+		if($post['interval'])
+			$query .= $this->getIntervalQuery($post['interval']);
+		if($post['start_datetime'])
+			$query .= ' AND w.start_datetime >= '.strtotime($post['start_datetime']);
+		if($post['end_datetime'])
+			$query .= ' AND w.end_datetime <= '.strtotime($post['end_datetime']);
+		$query .= ' ORDER BY  `w`.`start_datetime`';
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;
@@ -246,6 +259,27 @@ class timesheetApi{
 		} else {
 			return false;
 		}
+	}
+	public function getIntervalQuery($interval) {
+		switch($interval) {
+			case 'day':
+				$start_datetime 	= strtotime('midnight');
+				$end_datetime 		= strtotime('tomorrow midnight');
+				break;
+			case 'week':
+				$start_datetime 	= strtotime('monday this week');
+				$end_datetime 		= strtotime('sunday this week');
+				break;
+			case 'month':
+				$start_datetime 	= strtotime('midnight first day of this month');
+				$end_datetime 		= strtotime('midnight last day of this month');
+				break;
+			case 'year':
+				$start_datetime 	= strtotime('first day of january this year');
+				$end_datetime 		= strtotime('last day of december this year');
+				break;
+		}
+		return " AND w.start_datetime >= ".$start_datetime." AND w.end_datetime <= ".$end_datetime;
 	}
 	public function toggleInterval($data){
 		if(isset($_SESSION['interval']) && $_SESSION['interval'] != ''){

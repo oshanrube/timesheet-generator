@@ -48,7 +48,7 @@ h2, p {
 
 .container {width: 960px; margin: 0 auto; overflow: hidden;}
 
-.clock {width:800px; margin:0 auto; padding:30px; border:1px solid #333; color:#fff; }
+.clock {width:800px; height: 180px; margin:0 auto; padding:30px; border:1px solid #333; color:#fff; }
 
 #Date { font-family:'BebasNeueRegular', Arial, Helvetica, sans-serif; font-size:36px; text-align:center; text-shadow:0 0 5px #00c6ff; }
 
@@ -83,14 +83,14 @@ ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; f
 }
 #home textarea{
 	width: 638px;
-	height: 100px;
+	height: 140px;
 }
 #home #toggle_datetime{
 	float: right;
 	clear: none;
 	width: 143px;
 	height: 190px;
-	margin-top: -80px;
+	margin-top: -40px;
 }
 /* Top Menu */
 ul {  
@@ -161,8 +161,10 @@ ul.menu li.active a{
 }
 /* flash */
 #flash{
-	width: 800px;
-	margin: 0 auto;
+	display: inline-block;width: 650px;
+}
+#flash .alert{
+	margin-bottom: 0;
 }
 /*controls*/
 #contols form input{
@@ -319,3 +321,4 @@ width: 296px;
 .row .end-time, .row .end-date{ width: 120px; }
 .row .total-hours{ width: 65px; }
 .row .close{ width: 15px; }
+.clock #status{ display: inline-block;width: 150px; }

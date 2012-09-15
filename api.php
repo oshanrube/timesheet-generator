@@ -22,9 +22,6 @@ class timesheetApi{
 		//if its an interval
 		if($this->getInterval())
 			return false;
-		//get utc time
-		$offset = $_COOKIE['time_zone_offset'];
-		$time = $time + $this->offset;	
 		//get latest task
 		$query = 'SELECT *  FROM `task` WHERE `end_datetime` IS NULL ORDER BY `start_datetime` DESC LIMIT 0,1';
 		if($task = $this->connection->getone($query)){
@@ -44,7 +41,6 @@ class timesheetApi{
 					`end_datetime` = ".$time.",
 					`total_hours` = SEC_TO_TIME(TIME_TO_SEC(`total_hours`) + ".($time - $work->end_datetime).") 
 					WHERE `id` = ".$work->id.";";
-					echo $query."\n";
 				$this->connection->query($query);
 			} else {
 				//create work log
@@ -113,16 +109,26 @@ class timesheetApi{
 		$data['comment'] = '';
 		return $data;
 	}
+	public function getTasks(){
+		//query the projects in the database
+		$query = 'SELECT * FROM `task`';
+		if(!$tasks = $this->connection->fetch($query)){
+			$this->error = $this->connection->getError();
+			return false;
+		} else {
+			return $tasks;
+		}
+	}
 	public function startTask($post){
 		//validate 
-		if(empty($post['project_id']) || !preg_match("/project\-[0-9]+/",$post['project_id']) || empty($post['comment']) || empty($post['start_datetime']))
+		if(empty($post['project_id']) || !preg_match("/project\-[0-9]+/",$post['project_id']) || empty($post['comment']))
 			return false;
 		$post['project_id'] = str_replace('project-','',$post['project_id']);
 		//create query
 		$query = 'INSERT INTO `task` 
 				(`project_id`, `comment`, `start_datetime`) 
 			  VALUES 
-				("'.mysql_escape_string($post['project_id']).'", "'.mysql_escape_string($post['comment']).'", "'.mysql_escape_string( strtotime( $post['start_datetime'] ) ).'")';
+				("'.mysql_escape_string($post['project_id']).'", "'.mysql_escape_string($post['comment']).'", '.time().')';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();

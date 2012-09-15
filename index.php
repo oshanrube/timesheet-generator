@@ -30,7 +30,7 @@
 		    <li id="point">:</li>
 		    <li id="sec"> </li>
 		</ul>
-		<span id="status"></span>
+		<span id="status"></span><div id="flash"></div>
 	</div>
 	<div class="menu-wrapper">
 		<ul class="menu" rel="sam1">  
@@ -40,7 +40,6 @@
 		<li><a href="export">Export</a></li>  
 		</ul>  
 	</div>
-	<div id="flash"></div>
 	<div class="tabs-wrapper">
 		<div id="contols"></div>
 		<button id="refresh-btn"></button>

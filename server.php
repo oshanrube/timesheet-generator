@@ -38,6 +38,13 @@ switch($_GET['action']) {
 		else 
 			$_SESSION['success'] = 'Task Stopped';
 		break;
+	case "customTask":
+		$api = new timesheetApi();
+		if(!$api->customTask($_POST))
+			$_SESSION['error'] = $api->getError();
+		else 
+			$_SESSION['success'] = 'Custom Task Added';
+		break;
 	case "deleteWorksheet":
 		$api = new timesheetApi();
 		if(!$api->deleteWorksheet($_POST))

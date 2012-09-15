@@ -154,6 +154,44 @@ class timesheetApi{
 		} else
 			return true;
 	}
+	public function customTask($post){
+		//validate 
+		if(
+			empty($post['project_id']) || 
+			!preg_match("/project\-[0-9]+/",$post['project_id']) || 
+			empty($post['comment']) || 
+			empty($post['start_time']) || 
+			empty($post['end_time']) 
+		)
+			return false;
+		$post['project_id'] = str_replace('project-','',$post['project_id']);
+		//create a new task
+		$query = "INSERT INTO `task`(
+				`project_id`, `comment`, `start_time`, `end_time`, `total_hours`) 
+			VALUES (
+				".mysql_escape_string($post['project_id']).", 
+				\"".mysql_escape_string($post['comment'])."\", 
+				".mysql_escape_string($post['start_time']).",
+				".mysql_escape_string($post['end_time']).",
+				SEC_TO_TIME(".(strtotime($post['end_time']) - strtotime($post['start_time'])).") 
+				)";
+		if(!$this->connection->query($query)){
+      	$this->error = $this->connection->getError();
+      	return false;
+      } 
+		//create log entry
+		$taskId = $this->connection->getLastId();
+		$query = 'INSERT INTO `work_log`
+					(`project_id`, `task_id`, `start_time`, `end_time`, `total_hours`) 
+				VALUES
+					('.mysql_escape_string($post['project_id']).','.$taskId.','.mysql_escape_string($post['start_time']).','.mysql_escape_string($post['end_time']).',
+					SEC_TO_TIME('.(strtotime($post['end_time']) - strtotime($post['start_time'])).') )';
+		if(!$this->connection->query($query)){
+      	$this->error = $this->connection->getError();
+      	return false;
+      }
+      return true;
+	}
 	public function deleteWorksheet($post){
 		//validate 
 		if(empty($post['id']) && preg_match("/worksheet-[0-9]+/",$post['id']))

@@ -26,7 +26,7 @@ $(document).ready(function(){
 		clearForm: true,
 		success:    function() { loadStatus(); loadPage(); } 
 	};
-	$('form#interval').ajaxForm(options);
+	$('form#customTask').ajaxForm(options);
 	$('.datepicker').datepicker();
 });
 </script>

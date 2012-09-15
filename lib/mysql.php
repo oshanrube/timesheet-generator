@@ -37,6 +37,9 @@ class Mysql extends Dbconfig    {
 		$this->error = MYSQL_ERROR();
 		return false;
 	}
+	function getLastId() {
+		return  mysql_insert_id();
+	}
      
 	function fetch($sql) {
 		$data = ARRAY();

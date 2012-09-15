@@ -7,6 +7,8 @@ git clone git@github.com:oshanrube/timesheet-generator.git
 * go to Projects tab -> create project
 * go to homepage -> add a comment -> start
 
+checkout the DEMO site hosted in rhcloud
+	https://timesheet-oshanrube.rhcloud.com/
 
 Ref-
 	http://blog.insicdesigns.com/2010/02/create-a-slick-menu-using-css3/

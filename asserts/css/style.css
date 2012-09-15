@@ -85,7 +85,7 @@ ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; f
 	width: 638px;
 	height: 100px;
 }
-#home #toggle_time{
+#home #toggle_datetime{
 	float: right;
 	clear: none;
 	width: 143px;

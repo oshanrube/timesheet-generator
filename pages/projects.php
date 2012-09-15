@@ -11,8 +11,8 @@ $i = 0;
 	<div class="id">ID</div>
 	<div class="name">Project Name</div>
 	<div class="description">Project Description</div>
-	<div class="start-date">Start Date</div>
-	<div class="end-date">End Date</div>
+	<div class="start-date">Start Datetime</div>
+	<div class="end-date">End Datetime</div>
 	<div class="total-hours">Total Hours</div>
 	<div class="close"></div>
 </div>
@@ -26,8 +26,8 @@ $i = 0;
 						<div class="id"><?php echo $i++?></div>
 						<div class="name"><?php echo $project->name;?></div>
 						<div class="description"><?php echo $project->description;?></div>
-						<div class="start-date"><?php echo $project->start_date;?></div>
-						<div class="end-date"><?php echo $project->end_date;?></div>
+						<div class="start-date"><?php echo $project->start_datetime;?></div>
+						<div class="end-date"><?php echo $project->end_datetime;?></div>
 						<div class="total-hours"><?php echo $project->total_hours;?></div>
 						<div class="close"><button type="button" id="project-<?php echo $project->id?>" class="delete" data-dismiss="alert">x</button></div>
 					</div>

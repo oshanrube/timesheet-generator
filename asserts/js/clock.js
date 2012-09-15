@@ -1,5 +1,8 @@
-
-var clockIn = true;
+var today = new Date();
+var expire = new Date();
+expire.setTime(today.getTime() + 3600000*24*31);
+document.cookie = "time_zone_offset"+"="+escape(today.getTimezoneOffset())
+                 + ";expires="+expire.toGMTString();
 $(document).ready(function() {
 // Create two variable with the names of the months and days in an array
 var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]; 
@@ -17,9 +20,10 @@ setInterval( function() {
 	var seconds = new Date().getSeconds();
 	// Add a leading zero to seconds value
 	$("#sec").html(( seconds < 10 ? "0" : "" ) + seconds);
-	if(clockIn && (seconds % 10 == 0)){
+	if(seconds % 10 == 0){
 		//ping the server
-		var ts = Math.round((new Date()).getTime() / 1000);
+		var date = new Date();
+		var ts = Math.round(date.getTime() / 1000);
 		var jqxhr = $.ajax({
 			url: "server.php?action=clock&time="+ts,
 			cache: false
@@ -43,7 +47,7 @@ setInterval( function() {
 	$("#hours").html(( hours < 10 ? "0" : "" ) + hours);
     }, 1000);
 	
-	$("#toggle_time").click(function(response){
+	$("#toggle_datetime").click(function(response){
 		if($(this).text() == 'Start'){
 			$.ajax({url: "server.php?action=startTask"+getFormData(),cache: false})
 			.done(function() { 
@@ -56,16 +60,4 @@ setInterval( function() {
 			$(this).text('Start');
 		}
 	});	
-}); 
-function pauseClock(){
-	if(clockIn){
-		//pause
-		clockIn = false;
-		$('#pauseBtn').text('Resume');
-		$('#pauseBtn').attr('class','btn btn-info');
-	} else {
-		clockIn = true;
-		$('#pauseBtn').text('Pause');
-		$('#pauseBtn').attr('class','btn btn-primary');
-	}
-}
+});

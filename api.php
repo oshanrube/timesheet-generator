@@ -1,23 +1,32 @@
 <?php 
-session_start();
+if (!isset($_SESSION))
+  session_start();
+//set default timezone to UTC
+date_default_timezone_set("UTC");
 require_once 'lib/mysql.php';
 require_once 'lib/excel.php';
 
 class timesheetApi{
 	
 	private $connection,$error;
+	private $offset = 0;
 	private $clock_in_threadshold = 40;//40 seconds
 
 	public function __construct(){
 		//establish the db connection
-		$this->connection = new Mysql();
+		$this->connection = new Mysql();		
+		//get user timezone
+		$this->offset -= $_COOKIE["time_zone_offset"] * 60;
 	}
 	public function clockIn($time) {
 		//if its an interval
 		if($this->getInterval())
 			return false;
+		//get utc time
+		$offset = $_COOKIE['time_zone_offset'];
+		$time = $time + $this->offset;	
 		//get latest task
-		$query = 'SELECT *  FROM `task` WHERE `end_time` IS NULL ORDER BY `start_time` DESC LIMIT 0,1';
+		$query = 'SELECT *  FROM `task` WHERE `end_datetime` IS NULL ORDER BY `start_datetime` DESC LIMIT 0,1';
 		if($task = $this->connection->getone($query)){
 			//get the latest worklog for this
 			$query = 'SELECT *  
@@ -25,23 +34,24 @@ class timesheetApi{
 				WHERE
 					`task_id` = '.$task->id.' AND
 					`project_id` = '.$task->project_id.' AND 
-					`end_time` <= FROM_UNIXTIME('.$time.') AND
-					`end_time` >= FROM_UNIXTIME('.($time - $this->clock_in_threadshold).') 
-				ORDER BY `end_time` DESC LIMIT 0,1';
+					`end_datetime` <= '.$time.' AND
+					`end_datetime` >= '.($time - $this->clock_in_threadshold).' 
+				ORDER BY `end_datetime` DESC LIMIT 0,1';
 			//if there is a previous work
 			if($work = $this->connection->getone($query)){
 				//update the endtime
 				$query = "UPDATE `work_log` SET 
-					`end_time` = `end_time`+ INTERVAL ".($time - strtotime($work->end_time))." SECOND,
-					`total_hours` = SEC_TO_TIME(TIME_TO_SEC(`total_hours`) + ".($time - strtotime($work->end_time)).") 
+					`end_datetime` = ".$time.",
+					`total_hours` = SEC_TO_TIME(TIME_TO_SEC(`total_hours`) + ".($time - $work->end_datetime).") 
 					WHERE `id` = ".$work->id.";";
+					echo $query."\n";
 				$this->connection->query($query);
 			} else {
 				//create work log
 				$query = 'INSERT INTO `work_log`
-					(`project_id`, `task_id`, `start_time`, `end_time`, `total_hours`) 
+					(`project_id`, `task_id`, `start_datetime`, `end_datetime`, `total_hours`) 
 				VALUES
-					('.$task->project_id.','.$task->id.',"'.date('Y-m-d H:i:s',$time).'","'.date('Y-m-d H:i:s',$time).'",0)';
+					('.$task->project_id.','.$task->id.',"'.$time.'","'.$time.'",0)';
 				return $this->connection->query($query);
 			}
 		} else 
@@ -55,9 +65,9 @@ class timesheetApi{
 			return false;
 		//create query
 		$query = 'INSERT INTO `project` 
-				(`name`, `description`, `start_date`) 
+				(`name`, `description`, `start_datetime`) 
 			  VALUES 
-				("'.mysql_escape_string($post['name']).'", "'.mysql_escape_string($post['description']).'", NOW())';
+				("'.mysql_escape_string($post['name']).'", "'.mysql_escape_string($post['description']).'", '.time().')';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();
@@ -70,18 +80,7 @@ class timesheetApi{
 		if(empty($post['id']) || !preg_match("/project\-[0-9]+/",$post['id']))
 			return false;
 		$post['id'] = str_replace('project-','',$post['id']);
-		//delete all the worklogs
-		$query = 'DELETE FROM `work_log`	WHERE `project_id` = "'.mysql_escape_string($post['id']).'" ';
-		if(!$this->connection->query($query)){
-			$this->error = $this->connection->getError();
-			return false;
-		}
-		$query = 'DELETE FROM `task`	WHERE `project_id` = "'.mysql_escape_string($post['id']).'" ';
-		if(!$this->connection->query($query)){
-			$this->error = $this->connection->getError();
-			return false;
-		}
-		//delete the project
+		//create query
 		$query = 'DELETE FROM `project`	WHERE `id` = "'.mysql_escape_string($post['id']).'" ';
 		//execute
 		if(!$this->connection->query($query)){
@@ -96,43 +95,34 @@ class timesheetApi{
 		if(!$projects = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;
-		} else {
-			return $projects;
 		}
-	}
-	public function getTasks(){
-		//query the projects in the database
-		$query = 'SELECT * FROM `task`';
-		if(!$tasks = $this->connection->fetch($query)){
-			$this->error = $this->connection->getError();
-			return false;
-		} else {
-			return $tasks;
-		}
+		return $this->updateDateTime($projects);
 	}
 	public function getDefaultTask() {
 		//get the latest task
-		$query = 'SELECT *  FROM `task` WHERE `end_time` IS NULL ORDER BY `start_time` DESC LIMIT 0,1';
+		$query = 'SELECT *  FROM `task` WHERE `end_datetime` IS NULL ORDER BY `start_datetime` DESC LIMIT 0,1';
 		if($task = $this->connection->getone($query)){
-			return (array)$task;
+			$task = (array)$task;
+			$task['start_datetime'] = date('Y-m-d H:i:s', $task['start_datetime']);
+			return $task;
 		}
 		//
 		$data = array();
-		$data['start_time'] = date('Y-m-d H:i:s');
-		$data['end_time'] = '';
+		$data['start_datetime'] = date('Y-m-d H:i:s');
+		$data['end_datetime'] = '';
 		$data['comment'] = '';
 		return $data;
 	}
 	public function startTask($post){
 		//validate 
-		if(empty($post['project_id']) || !preg_match("/project\-[0-9]+/",$post['project_id']) || empty($post['comment']) || empty($post['start_time']))
+		if(empty($post['project_id']) || !preg_match("/project\-[0-9]+/",$post['project_id']) || empty($post['comment']) || empty($post['start_datetime']))
 			return false;
 		$post['project_id'] = str_replace('project-','',$post['project_id']);
 		//create query
 		$query = 'INSERT INTO `task` 
-				(`project_id`, `comment`, `start_time`) 
+				(`project_id`, `comment`, `start_datetime`) 
 			  VALUES 
-				("'.mysql_escape_string($post['project_id']).'", "'.mysql_escape_string($post['comment']).'", "'.mysql_escape_string($post['start_time']).'")';
+				("'.mysql_escape_string($post['project_id']).'", "'.mysql_escape_string($post['comment']).'", "'.mysql_escape_string( strtotime( $post['start_datetime'] ) ).'")';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();
@@ -146,7 +136,7 @@ class timesheetApi{
 			return false;
 		$post['id'] = str_replace('task-','',$post['id']);
 		//create query
-		$query = 'UPDATE `task` SET `end_time` = NOW() WHERE id = "'.mysql_escape_string($post['id']).'" ';
+		$query = 'UPDATE `task` SET `end_datetime` = '.time().' WHERE id = "'.mysql_escape_string($post['id']).'" ';
 		//execute
 		if(!$this->connection->query($query)){
 			$this->error = $this->connection->getError();
@@ -160,20 +150,20 @@ class timesheetApi{
 			empty($post['project_id']) || 
 			!preg_match("/project\-[0-9]+/",$post['project_id']) || 
 			empty($post['comment']) || 
-			empty($post['start_time']) || 
-			empty($post['end_time']) 
+			empty($post['start_datetime']) || 
+			empty($post['end_datetime']) 
 		)
 			return false;
 		$post['project_id'] = str_replace('project-','',$post['project_id']);
 		//create a new task
 		$query = "INSERT INTO `task`(
-				`project_id`, `comment`, `start_time`, `end_time`, `total_hours`) 
+				`project_id`, `comment`, `start_datetime`, `end_datetime`, `total_hours`) 
 			VALUES (
 				".mysql_escape_string($post['project_id']).", 
 				\"".mysql_escape_string($post['comment'])."\", 
-				".mysql_escape_string($post['start_time']).",
-				".mysql_escape_string($post['end_time']).",
-				SEC_TO_TIME(".(strtotime($post['end_time']) - strtotime($post['start_time'])).") 
+				".mysql_escape_string($post['start_datetime']).",
+				".mysql_escape_string($post['end_datetime']).",
+				SEC_TO_datetime(".(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).") 
 				)";
 		if(!$this->connection->query($query)){
       	$this->error = $this->connection->getError();
@@ -182,10 +172,10 @@ class timesheetApi{
 		//create log entry
 		$taskId = $this->connection->getLastId();
 		$query = 'INSERT INTO `work_log`
-					(`project_id`, `task_id`, `start_time`, `end_time`, `total_hours`) 
+					(`project_id`, `task_id`, `start_datetime`, `end_datetime`, `total_hours`) 
 				VALUES
-					('.mysql_escape_string($post['project_id']).','.$taskId.','.mysql_escape_string($post['start_time']).','.mysql_escape_string($post['end_time']).',
-					SEC_TO_TIME('.(strtotime($post['end_time']) - strtotime($post['start_time'])).') )';
+					('.mysql_escape_string($post['project_id']).','.$taskId.','.mysql_escape_string($post['start_datetime']).','.mysql_escape_string($post['end_datetime']).',
+					SEC_TO_TIME('.(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).') )';
 		if(!$this->connection->query($query)){
       	$this->error = $this->connection->getError();
       	return false;
@@ -210,20 +200,19 @@ class timesheetApi{
 		//query the projects in the database
 		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
 			FROM `work_log` as w,`project` as p,`task` as t 
-			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id` 
-			ORDER BY w.end_time DESC';
+			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`';
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;
-		} else
-			return $worksheets;
+		}
+		return $this->updateDateTime($worksheets);
 	}
 	public function exportWorksheet(){
 		//get worklog
 		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
 			FROM `work_log` as w,`project` as p,`task` as t 
 			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`
-			ORDER BY  `w`.`end_time`';
+			ORDER BY  `w`.`end_datetime`';
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;
@@ -250,6 +239,18 @@ class timesheetApi{
 				$data['reason'] = 'No special reason';
 			$_SESSION['interval'] = $data['reason'];
 		}
+	}
+	public function updateDateTime($records) {
+		//loop though the records
+		foreach($records as $key => $record){
+			//if time related
+			if($record->start_datetime)
+				$record->start_datetime = 	date('d-m-Y H:i:s', ($record->start_datetime + $this->offset));
+			if($record->end_datetime)
+				$record->end_datetime = 	date('d-m-Y H:i:s', ($record->end_datetime + $this->offset)); 
+			$records[$key] = $record;
+		}
+		return $records;
 	}
 	public function getError(){
 		return $this->error;

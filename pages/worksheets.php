@@ -26,8 +26,8 @@ $i = 0;
 						<div class="id"><?php echo $i++?></div>
 						<div class="name"><?php echo $worksheet->projectname;?></div>
 						<div class="comment"><?php echo $worksheet->taskname;?></div>
-						<div class="start-time"><?php echo $worksheet->start_time;?></div>
-						<div class="end-time"><?php echo $worksheet->end_time;?></div>
+						<div class="start-time"><?php echo $worksheet->start_datetime;?></div>
+						<div class="end-time"><?php echo $worksheet->end_datetime;?></div>
 						<div class="total-hours"><?php echo $worksheet->total_hours;?></div>
 						<div class="close"><button type="button" id="worksheet-<?php echo $worksheet->id?>" class="delete" data-dismiss="alert">x</button></div>
 					</div>

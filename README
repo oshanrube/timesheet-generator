@@ -18,12 +18,16 @@ Ref-
 * Big thanks goes to these projects for making this project in such a short time
 
 /* TODO */
-/* EXPORT filter */
-* projects
-* tasks
-* within FROM TO
+* add a EXPORT filter
+	projects, tasks, within FROM - TO
+* add js effects for notices, controllers etc
+
+/* DONE */
 * add a custom task
 
 /* KNOWN BUGS */
 * Timezone error when hosted in a different timezone - there is another brach for this fix but its still in progress
-* <strike>split error in bootstrap date picker</strike>
+* custom tasks will need more detailed version to saved correctly into the db - this will be fixed when the timestaps are converted to ints when we merge the utc fix
+
+/* Fixed */
+* split error in bootstrap date picker

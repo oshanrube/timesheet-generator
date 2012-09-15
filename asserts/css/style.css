@@ -48,7 +48,7 @@ h2, p {
 
 .container {width: 960px; margin: 0 auto; overflow: hidden;}
 
-.clock {width:800px; height: 180px; margin:0 auto; padding:30px; border:1px solid #333; color:#fff; }
+.clock {width:800px; margin:0 auto; padding:30px; border:1px solid #333; color:#fff; padding-bottom: 10px; }
 
 #Date { font-family:'BebasNeueRegular', Arial, Helvetica, sans-serif; font-size:36px; text-align:center; text-shadow:0 0 5px #00c6ff; }
 

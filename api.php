@@ -1,6 +1,5 @@
 <?php 
-if (!isset($_SESSION))
-  session_start();
+if (!isset($_SESSION)) session_start();
 //set default timezone to UTC
 date_default_timezone_set("UTC");
 require_once 'lib/mysql.php';
@@ -76,7 +75,18 @@ class timesheetApi{
 		if(empty($post['id']) || !preg_match("/project\-[0-9]+/",$post['id']))
 			return false;
 		$post['id'] = str_replace('project-','',$post['id']);
-		//create query
+		//delete all the worklogs
+		$query = 'DELETE FROM `work_log`	WHERE `project_id` = "'.mysql_escape_string($post['id']).'" ';
+		if(!$this->connection->query($query)){
+			$this->error = $this->connection->getError();
+			return false;
+		}
+		$query = 'DELETE FROM `task`	WHERE `project_id` = "'.mysql_escape_string($post['id']).'" ';
+		if(!$this->connection->query($query)){
+			$this->error = $this->connection->getError();
+			return false;
+		}
+		//delete the project
 		$query = 'DELETE FROM `project`	WHERE `id` = "'.mysql_escape_string($post['id']).'" ';
 		//execute
 		if(!$this->connection->query($query)){

@@ -177,9 +177,9 @@ class timesheetApi{
 			VALUES (
 				".mysql_escape_string($post['project_id']).", 
 				\"".mysql_escape_string($post['comment'])."\", 
-				".mysql_escape_string($post['start_datetime']).",
-				".mysql_escape_string($post['end_datetime']).",
-				SEC_TO_datetime(".(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).") 
+				".strtotime($post['start_datetime']).",
+				".strtotime($post['end_datetime']).",
+				SEC_TO_TIME(".(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).") 
 				)";
 		if(!$this->connection->query($query)){
       	$this->error = $this->connection->getError();
@@ -190,7 +190,7 @@ class timesheetApi{
 		$query = 'INSERT INTO `work_log`
 					(`project_id`, `task_id`, `start_datetime`, `end_datetime`, `total_hours`) 
 				VALUES
-					('.mysql_escape_string($post['project_id']).','.$taskId.','.mysql_escape_string($post['start_datetime']).','.mysql_escape_string($post['end_datetime']).',
+					('.mysql_escape_string($post['project_id']).','.$taskId.','.strtotime($post['start_datetime']).','.strtotime($post['end_datetime']).',
 					SEC_TO_TIME('.(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).') )';
 		if(!$this->connection->query($query)){
       	$this->error = $this->connection->getError();

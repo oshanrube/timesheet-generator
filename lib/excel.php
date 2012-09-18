@@ -11,6 +11,7 @@ class Excel{
 		/** Create a new PHPExcel Object  **/
 		$this->objPHPExcel = new PHPExcel();
 		$this->filename = 'timesheet-'.date("YmdHis").'.xlsx';
+		date_default_timezone_set("Etc/GMT-2");
 	}
 	
 	public function createExcel($records) {

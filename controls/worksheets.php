@@ -10,7 +10,7 @@ $api = new timesheetApi();
 </select>
 <input type="text" name="comment" placeholder="Comment: " />
 <div class="input-append date datepicker" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-	<input name="start_time" id="start_time" type="text" value="<?php echo $data['start_datetime']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
+	<input name="start_datetime" id="start_datetime" type="text" value="<?php echo $data['start_datetime']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
   <span class="add-on"><i class="icon-th"></i></span>
 </div>
 

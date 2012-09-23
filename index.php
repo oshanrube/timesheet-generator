@@ -5,9 +5,10 @@
 <link href="icon.ico" rel="icon" type="image/x-icon">
 <title>Timesheets</title>
 <link type="text/css" rel="stylesheet" href="asserts/css/bootstrap.min.css" />
-<link type="text/css" rel="stylesheet" href="asserts/css/datepicker.css" />
+<!--<link type="text/css" rel="stylesheet" href="asserts/css/datepicker.css" />-->
 <link type="text/css" rel="stylesheet" href="asserts/css/style.css" />
 <link type="text/css" rel="stylesheet" href="asserts/css/tabber-style.css" media="screen"/>
+<link type="text/css" rel="stylesheet" href="asserts/css/mobiscroll-2.0.3.custom.min.css" />
 
 
 <script type="text/javascript" src="asserts/js/jquery.min.js"></script>
@@ -17,7 +18,10 @@
 <script type="text/javascript" src="asserts/js/sliding.form.js"></script>
 <script type="text/javascript" src="asserts/js/form.js"></script>
 <script type="text/javascript" src="asserts/js/jquery.tinyscrollbar.min.js"></script>
-<script type="text/javascript" src="asserts/js/bootstrap-datepicker.js"></script>
+<!--<script type="text/javascript" src="asserts/js/bootstrap-datepicker.js"></script>-->
+<!--<script type="text/javascript" src="asserts/js/mobiscroll-2.0.3.custom.min.js"></script>-->
+<script type="text/javascript" src="asserts/js/mobiscroll.core-2.0.3.js"></script>
+<script type="text/javascript" src="asserts/js/mobiscroll.datetime-2.0.3.js"></script>
 </head>
 <body>
 <div class="container">

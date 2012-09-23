@@ -10,7 +10,7 @@ class Excel{
 	public function __construct() {
 		/** Create a new PHPExcel Object  **/
 		$this->objPHPExcel = new PHPExcel();
-		$this->filename = 'timesheet-'.date("YmdHis").'.xlsx';
+		$this->filename = 'Oshan-'.date("Ymd").'.xlsx';
 		date_default_timezone_set("Etc/GMT-2");
 	}
 	
@@ -24,7 +24,7 @@ class Excel{
 		/*HEADER STYLING*/
 		$styleArray = array(
 			'font' => array('bold' => true,),
-			'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,),
+			'alignment' => array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER),
 			'borders' => array('top' => array('style' => PHPExcel_Style_Border::BORDER_THIN,),),
 		);
 		$this->objPHPExcel->getActiveSheet()->getStyle('A1:H1')->applyFromArray($styleArray);
@@ -54,38 +54,43 @@ class Excel{
 		$this->objPHPExcel->getActiveSheet()
 		            ->getStyle('B')
 		            ->getNumberFormat()
-		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
-		
+		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_DDMMYYYY3);
+	
 		$this->objPHPExcel->getActiveSheet()
 		            ->getStyle('C')
 		            ->getNumberFormat()
-		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3);
-		            
+		            ->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3 );
+		          
 		$this->objPHPExcel->getActiveSheet()
 		            ->getStyle('D')
 		            ->getNumberFormat()
-		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_DDMMYYYY);
+		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_DDMMYYYY3);
 		
 		$this->objPHPExcel->getActiveSheet()
 		            ->getStyle('E')
 		            ->getNumberFormat()
-		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3);
+		            ->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3 );
 		            
 		$this->objPHPExcel->getActiveSheet()
 		            ->getStyle('H')
 		            ->getNumberFormat()
-		            ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3);
+		            ->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3 );
+		            
+		$this->objPHPExcel->getActiveSheet()
+						->getStyle("G")
+						->getAlignment()
+						->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 	}
 	
 	private function createBody($records) {
 		/*BODY*/
 		$row = 3;
 		foreach($records as $record){
-			list($SDate,$STime) = explode(' ', date('d-m-Y H:i',$record->start_datetime));
-			list($EDate,$ETime) = explode(' ', date('d-m-Y H:i',$record->end_datetime));
+			list($SDate,$STime) = explode(' ', date('d.m.Y H:i',$record->start_datetime));
+			list($EDate,$ETime) = explode(' ', date('d.m.Y H:i',$record->end_datetime));
 			
 			$this->objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $record->projectname);			
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			//PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
 			$this->objPHPExcel->getActiveSheet()->setCellValue('B'.$row, $SDate);
 			$this->objPHPExcel->getActiveSheet()->setCellValue('C'.$row, $STime);
 			$this->objPHPExcel->getActiveSheet()->setCellValue('D'.$row, $EDate);

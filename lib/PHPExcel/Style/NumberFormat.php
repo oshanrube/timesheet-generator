@@ -49,6 +49,7 @@ class PHPExcel_Style_NumberFormat implements PHPExcel_IComparable
 	const FORMAT_PERCENTAGE_00				= '0.00%';
 
 	const FORMAT_DATE_YYYYMMDD2				= 'yyyy-mm-dd';
+	const FORMAT_DATE_DDMMYYYY3			= 'dd.mm.yyyy';
 	const FORMAT_DATE_YYYYMMDD				= 'yy-mm-dd';
 	const FORMAT_DATE_DDMMYYYY				= 'dd/mm/yy';
 	const FORMAT_DATE_DMYSLASH				= 'd/m/y';

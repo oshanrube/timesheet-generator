@@ -52,8 +52,8 @@ h2, p {
 
 #Date { font-family:'BebasNeueRegular', Arial, Helvetica, sans-serif; font-size:36px; text-align:center; text-shadow:0 0 5px #00c6ff; }
 
-ul { width:800px; margin:0 auto; padding:0px; list-style:none; text-align:center; }
-ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; font-family:'BebasNeueRegular', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
+.container ul { width:800px; margin:0 auto; padding:0px; list-style:none; text-align:center; }
+.container ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; font-family:'BebasNeueRegular', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
 
 #point { position:relative; -moz-animation:mymove 1s ease infinite; -webkit-animation:mymove 1s ease infinite; padding-left:10px; padding-right:10px; }
 
@@ -78,12 +78,20 @@ ul li { line-height: 120px;display:inline; font-size:100px; text-align:center; f
 #home select{
 	width: 650px;
 }
+#home select#task{
+	float: left;
+}
 #home input{
 	width: 310px;
 }
 #home textarea{
-	width: 638px;
-	height: 140px;
+	width: 636px;
+	height: 100px;
+	float: left;
+}
+#home #updatebtn{
+	float: left;
+	width: 650px;
 }
 #home #toggle_datetime{
 	float: right;
@@ -239,10 +247,10 @@ ul.menu li.active a{
 	display: block;
 	float: left;
 	width: 319px;
+	margin-right: 8px;
 }
 #export .date input{
 	margin: 0;
-	margin-left: -4px;
 	width: 283px;
 }
 #export #interval{

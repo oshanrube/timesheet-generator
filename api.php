@@ -171,14 +171,17 @@ class timesheetApi{
 		)
 			return false;
 		$post['project_id'] = str_replace('project-','',$post['project_id']);
+		//set times to UTC
+		$start_datetime 	= ( strtotime($post['start_datetime']) - $this->offset );
+		$end_datetime 		= ( strtotime($post['end_datetime']) - $this->offset );
 		//create a new task
 		$query = "INSERT INTO `task`(
 				`project_id`, `comment`, `start_datetime`, `end_datetime`, `total_hours`) 
 			VALUES (
 				".mysql_escape_string($post['project_id']).", 
 				\"".mysql_escape_string($post['comment'])."\", 
-				".strtotime($post['start_datetime']).",
-				".strtotime($post['end_datetime']).",
+				". $start_datetime .",
+				". $end_datetime .",
 				SEC_TO_TIME(".(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).") 
 				)";
 		if(!$this->connection->query($query)){
@@ -190,7 +193,7 @@ class timesheetApi{
 		$query = 'INSERT INTO `work_log`
 					(`project_id`, `task_id`, `start_datetime`, `end_datetime`, `total_hours`) 
 				VALUES
-					('.mysql_escape_string($post['project_id']).','.$taskId.','.strtotime($post['start_datetime']).','.strtotime($post['end_datetime']).',
+					('.mysql_escape_string($post['project_id']).','.$taskId.','. $start_datetime .','. $start_datetime .',
 					SEC_TO_TIME('.(strtotime($post['end_datetime']) - strtotime($post['start_datetime'])).') )';
 		if(!$this->connection->query($query)){
       	$this->error = $this->connection->getError();
@@ -216,7 +219,8 @@ class timesheetApi{
 		//query the projects in the database
 		$query = 'SELECT p.name as projectname, t.comment as taskname, w.* 
 			FROM `work_log` as w,`project` as p,`task` as t 
-			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`';
+			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id`
+			ORDER BY w.id DESC';
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;
@@ -230,7 +234,7 @@ class timesheetApi{
 			WHERE w.`project_id` = p.`id` AND w.`task_id` = t.`id` ';
 		//if project id
 		if($post['project_id'])
-			$query .= ' AND p.id = '.$post['project_id'];
+			$query .= ' AND p.id = '.str_replace('project-','',$post['project_id']);
 		//if task id
 		if($post['task_id'])
 			$query .= ' AND t.id = '.$post['task_id'];
@@ -242,6 +246,7 @@ class timesheetApi{
 		if($post['end_datetime'])
 			$query .= ' AND w.end_datetime <= '.strtotime($post['end_datetime']);
 		$query .= ' ORDER BY  `w`.`start_datetime`';
+
 		if(!$worksheets = $this->connection->fetch($query)){
 			$this->error = $this->connection->getError();
 			return false;

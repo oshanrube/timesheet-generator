@@ -9,13 +9,13 @@ $api = new timesheetApi();
 	<?php endforeach;?>
 </select>
 <input type="text" name="comment" placeholder="Comment: " />
-<div class="input-append date datepicker" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-	<input name="start_datetime" id="start_datetime" type="text" value="<?php echo $data['start_datetime']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
+<div class="input-append date">
+	<input name="start_datetime" class="datepicker" id="start_datetime" type="text" value="<?php echo $data['start_datetime']?>"  placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>
   <span class="add-on"><i class="icon-th"></i></span>
 </div>
 
-<div class="input-append date datepicker" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-	<input name="end_datetime" id="end_datetime" type="text" value="<?php echo $data['end_datetime']?>"  placeholder="To: (YYYY-MM-DD HH:MM:SS)"/>
+<div class="input-append date">
+	<input name="end_datetime" class="datepicker" id="end_datetime" type="text" value="<?php echo $data['end_datetime']?>"  placeholder="To: (YYYY-MM-DD HH:MM:SS)"/>
 	<span class="add-on"><i class="icon-th"></i></span>
 </div>
 <button name="action" value="pause" class="btn btn-primary pull-right">Add</button>
@@ -27,6 +27,14 @@ $(document).ready(function(){
 		success:    function() { loadStatus(); loadPage(); } 
 	};
 	$('form#customTask').ajaxForm(options);
-	$('.datepicker').datepicker();
+   $('.datepicker').scroller({
+        preset: 'datetime',
+        theme: 'default',
+        display: 'modal',
+        mode: 'scroller',
+        dateFormat: 'yy-mm-dd',
+        dateOrder: 'yymmdd',
+        timeFormat: 'HH:ii:ss'
+   }); 
 });
 </script>

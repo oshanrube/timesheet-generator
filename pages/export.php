@@ -17,10 +17,11 @@ $api = new timesheetApi();
 	</select>
 	<select name="interval" id="interval">
 		<option value="">Custom / All</option>
-		<option value="day">Day</option>
-		<option value="week">Week</option>
-		<option value="month">Month</option>
-		<option value="year">Year</option>
+		<option value="day">Today</option>
+		<option value="yesterday">Yesterday</option>
+		<option value="week">This Week</option>
+		<option value="month">This Month</option>
+		<option value="year">This Year</option>
 	</select>
 	<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
 		<input name="start_datetime" class="datepicker" id="start_datetime" type="text" placeholder="From: (YYYY-MM-DD HH:MM:SS)"/>

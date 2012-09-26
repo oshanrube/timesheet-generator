@@ -271,6 +271,10 @@ class timesheetApi{
 				$start_datetime 	= strtotime('midnight');
 				$end_datetime 		= strtotime('tomorrow midnight');
 				break;
+			case 'yesterday':
+				$start_datetime 	= strtotime('yesterday midnight');
+				$end_datetime 		= strtotime('midnight');
+				break;
 			case 'week':
 				$start_datetime 	= strtotime('monday this week');
 				$end_datetime 		= strtotime('sunday this week');
